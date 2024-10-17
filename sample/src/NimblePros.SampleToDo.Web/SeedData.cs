@@ -1,7 +1,6 @@
 ﻿using NimblePros.SampleToDo.Core.ContributorAggregate;
 using NimblePros.SampleToDo.Core.ProjectAggregate;
 using NimblePros.SampleToDo.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace NimblePros.SampleToDo.Web;
 
@@ -9,7 +8,7 @@ public static class SeedData
 {
   public static readonly Contributor Contributor1 = new ("Ardalis");
   public static readonly Contributor Contributor2 = new ("Snowfrog");
-  public static readonly Project TestProject1 = new Project("Test Project", PriorityStatus.Backlog);
+  public static readonly Project TestProject1 = new Project("Test Project", Priority.Backlog);
   public static readonly ToDoItem ToDoItem1 = new ToDoItem
   {
     Title = "Get Sample Working",

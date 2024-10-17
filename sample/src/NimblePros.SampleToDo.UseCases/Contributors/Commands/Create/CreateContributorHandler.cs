@@ -1,8 +1,6 @@
-﻿using Ardalis.Result;
-using Ardalis.SharedKernel;
-using NimblePros.SampleToDo.Core.ContributorAggregate;
+﻿using NimblePros.SampleToDo.Core.ContributorAggregate;
 
-namespace NimblePros.SampleToDo.UseCases.Contributors.Create;
+namespace NimblePros.SampleToDo.UseCases.Contributors.Commands.Create;
 
 public class CreateContributorHandler : ICommandHandler<CreateContributorCommand, Result<int>>
 {

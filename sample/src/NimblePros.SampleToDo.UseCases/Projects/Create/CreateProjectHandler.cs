@@ -1,6 +1,4 @@
-﻿using Ardalis.Result;
-using Ardalis.SharedKernel;
-using NimblePros.SampleToDo.Core.ProjectAggregate;
+﻿using NimblePros.SampleToDo.Core.ProjectAggregate;
 
 namespace NimblePros.SampleToDo.UseCases.Projects.Create;
 
@@ -16,7 +14,7 @@ public class CreateProjectHandler : ICommandHandler<CreateProjectCommand, Result
   public async Task<Result<int>> Handle(CreateProjectCommand request,
     CancellationToken cancellationToken)
   {
-    var newProject = new Project(request.Name, PriorityStatus.Backlog);
+    var newProject = new Project(request.Name, Priority.Backlog);
     var createdItem = await _repository.AddAsync(newProject, cancellationToken);
 
     return createdItem.Id;

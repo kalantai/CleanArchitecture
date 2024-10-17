@@ -1,19 +1,10 @@
-﻿using System.Reflection;
-using Ardalis.SharedKernel;
-using Clean.Architecture.Core.ContributorAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Clean.Architecture.Core.ContributorAggregate;
 
 namespace Clean.Architecture.Infrastructure.Data;
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options,
+  IDomainEventDispatcher? dispatcher) : DbContext(options)
 {
-  private readonly IDomainEventDispatcher? _dispatcher;
-
-  public AppDbContext(DbContextOptions<AppDbContext> options,
-    IDomainEventDispatcher? dispatcher)
-      : base(options)
-  {
-    _dispatcher = dispatcher;
-  }
+  private readonly IDomainEventDispatcher? _dispatcher = dispatcher;
 
   public DbSet<Contributor> Contributors => Set<Contributor>();
 

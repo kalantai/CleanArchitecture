@@ -1,22 +1,21 @@
-﻿using System.Text;
-using Newtonsoft.Json;
-using Xunit;
-using NimblePros.SampleToDo.Web.ProjectEndpoints;
-using Ardalis.HttpClientTestExtensions;
+﻿using NimblePros.SampleToDo.FunctionalTests.ClassFixtures;
 using NimblePros.SampleToDo.Web.Endpoints.Projects;
+using NimblePros.SampleToDo.Web.ProjectEndpoints;
 using NimblePros.SampleToDo.Web.Projects;
-using FluentAssertions;
 
 namespace NimblePros.SampleToDo.FunctionalTests.Projects;
 
 [Collection("Sequential")]
-public class ProjectItemMarkComplete : IClassFixture<CustomWebApplicationFactory<Program>>
+public class ProjectItemMarkComplete : 
+  IClassFixture<CustomWebApplicationFactory<Program>>,
+  IClassFixture<SmtpServerFixture>
 {
   private readonly HttpClient _client;
 
-  public ProjectItemMarkComplete(CustomWebApplicationFactory<Program> factory)
+  public ProjectItemMarkComplete(CustomWebApplicationFactory<Program> factory, SmtpServerFixture smtpServer)
   {
     _client = factory.CreateClient();
+    smtpServer.EnsureContainerIsRunning();
   }
 
   [Fact]

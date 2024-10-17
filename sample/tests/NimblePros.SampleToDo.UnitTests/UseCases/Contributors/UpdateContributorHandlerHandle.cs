@@ -1,13 +1,5 @@
-﻿using Ardalis.Result;
-using Ardalis.SharedKernel;
-using Ardalis.Specification;
-using FluentAssertions;
-using NimblePros.SampleToDo.Core.ContributorAggregate;
-using NimblePros.SampleToDo.Core.ContributorAggregate.Specifications;
-using NimblePros.SampleToDo.UseCases.Contributors.Update;
-using NSubstitute;
-using NSubstitute.ReturnsExtensions;
-using Xunit;
+﻿using NimblePros.SampleToDo.Core.ContributorAggregate;
+using NimblePros.SampleToDo.UseCases.Contributors.Commands.Update;
 
 namespace NimblePros.SampleToDo.UnitTests.UseCases.Contributors;
 

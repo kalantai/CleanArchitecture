@@ -1,6 +1,4 @@
-﻿using FastEndpoints;
-using NimblePros.SampleToDo.UseCases.Contributors.Create;
-using MediatR;
+﻿using NimblePros.SampleToDo.UseCases.Contributors.Commands.Create;
 
 namespace NimblePros.SampleToDo.Web.Contributors;
 

@@ -1,7 +1,4 @@
-﻿using Ardalis.Result;
-using Ardalis.SharedKernel;
-
-namespace NimblePros.SampleToDo.UseCases.Contributors.List;
+﻿namespace NimblePros.SampleToDo.UseCases.Contributors.Queries.List;
 
 public class ListContributorsHandler : IQueryHandler<ListContributorsQuery, Result<IEnumerable<ContributorDTO>>>
 {

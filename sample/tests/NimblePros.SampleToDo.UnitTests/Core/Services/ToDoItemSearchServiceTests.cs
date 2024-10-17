@@ -1,11 +1,6 @@
-﻿using Ardalis.Result;
-using Ardalis.Specification;
-using NimblePros.SampleToDo.Core.Interfaces;
+﻿using NimblePros.SampleToDo.Core.Interfaces;
 using NimblePros.SampleToDo.Core.ProjectAggregate;
 using NimblePros.SampleToDo.Core.Services;
-using Ardalis.SharedKernel;
-using Xunit;
-using NSubstitute;
 
 namespace NimblePros.SampleToDo.UnitTests.Core.Services;
 
@@ -40,7 +35,7 @@ public class ToDoItemSearchServiceTests
   public async Task ReturnsAllIncompleteItems()
   {
     var title = "Some Title";
-    Project project = new Project("Cool Project", PriorityStatus.Backlog);
+    Project project = new Project("Cool Project", Priority.Backlog);
     
     project.AddItem(new ToDoItem
     {

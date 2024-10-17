@@ -1,6 +1,4 @@
 ﻿using NimblePros.SampleToDo.Core.ProjectAggregate;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace NimblePros.SampleToDo.Infrastructure.Data.Config;
 
@@ -15,6 +13,6 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
     builder.Property(p => p.Priority)
       .HasConversion(
           p => p.Value,
-          p => PriorityStatus.FromValue(p));
+          p => Priority.FromValue(p));
   }
 }

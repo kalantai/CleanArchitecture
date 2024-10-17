@@ -1,9 +1,7 @@
-﻿using Ardalis.Result;
-using Ardalis.SharedKernel;
-using NimblePros.SampleToDo.Core.ContributorAggregate;
+﻿using NimblePros.SampleToDo.Core.ContributorAggregate;
 using NimblePros.SampleToDo.Core.ContributorAggregate.Specifications;
 
-namespace NimblePros.SampleToDo.UseCases.Contributors.Get;
+namespace NimblePros.SampleToDo.UseCases.Contributors.Queries.Get;
 
 /// <summary>
 /// Queries don't necessarily need to use repository methods, but they can if it's convenient
