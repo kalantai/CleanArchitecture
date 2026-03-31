@@ -9,7 +9,7 @@ public class EfRepositoryDelete : BaseEfRepoTestFixture
   {
     // add a Contributor
     var repository = GetRepository();
-    var initialName = Guid.NewGuid().ToString();
+    var initialName = ContributorName.From(Guid.NewGuid().ToString());
     var Contributor = new Contributor(initialName);
     await repository.AddAsync(Contributor);
 
@@ -17,7 +17,6 @@ public class EfRepositoryDelete : BaseEfRepoTestFixture
     await repository.DeleteAsync(Contributor);
 
     // verify it's no longer there
-    Assert.DoesNotContain(await repository.ListAsync(),
-        Contributor => Contributor.Name == initialName);
+    (await repository.ListAsync()).ShouldNotContain(Contributor => Contributor.Name == initialName);
   }
 }

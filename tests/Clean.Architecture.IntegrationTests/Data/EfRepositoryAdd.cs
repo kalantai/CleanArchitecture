@@ -7,7 +7,7 @@ public class EfRepositoryAdd : BaseEfRepoTestFixture
   [Fact]
   public async Task AddsContributorAndSetsId()
   {
-    var testContributorName = "testContributor";
+    var testContributorName = ContributorName.From("testContributor");
     var testContributorStatus = ContributorStatus.NotSet;
     var repository = GetRepository();
     var Contributor = new Contributor(testContributorName);
@@ -17,8 +17,9 @@ public class EfRepositoryAdd : BaseEfRepoTestFixture
     var newContributor = (await repository.ListAsync())
                     .FirstOrDefault();
 
-    Assert.Equal(testContributorName, newContributor?.Name);
-    Assert.Equal(testContributorStatus, newContributor?.Status);
-    Assert.True(newContributor?.Id > 0);
+    newContributor.ShouldNotBeNull();
+    testContributorName.ShouldBe(newContributor.Name);
+    testContributorStatus.ShouldBe(newContributor.Status);
+    newContributor.Id.Value.ShouldBeGreaterThan(0);
   }
 }

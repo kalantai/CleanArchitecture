@@ -6,42 +6,34 @@ namespace NimblePros.SampleToDo.Web;
 
 public static class SeedData
 {
-  public static readonly Contributor Contributor1 = new ("Ardalis");
-  public static readonly Contributor Contributor2 = new ("Snowfrog");
-  public static readonly Project TestProject1 = new Project("Test Project", Priority.Backlog);
-  public static readonly ToDoItem ToDoItem1 = new ToDoItem
-  {
-    Title = "Get Sample Working",
-    Description = "Try to get the sample to build."
-  };
-  public static readonly ToDoItem ToDoItem2 = new ToDoItem
-  {
-    Title = "Review Solution",
-    Description = "Review the different projects in the solution and how they relate to one another."
-  };
-  public static readonly ToDoItem ToDoItem3 = new ToDoItem
-  {
-    Title = "Run and Review Tests",
-    Description = "Make sure all the tests run and review what they are doing."
-  };
+  public static readonly Contributor Contributor1 = new(ContributorName.From("Ardalis"));
+  public static readonly Contributor Contributor2 = new(ContributorName.From("Snowfrog"));
+  public static readonly Project TestProject1 = new Project(ProjectName.From("Test Project"));
 
-  public static void Initialize(IServiceProvider serviceProvider)
+  public static readonly ToDoItem ToDoItem1 =
+    new ToDoItem(title: ToDoItemTitle.From("Get Sample Working"),
+      description: ToDoItemDescription.From("Try to get the sample to build."));
+
+  public static readonly ToDoItem ToDoItem2 =
+  new ToDoItem(title: ToDoItemTitle.From("Review Solution"),
+    description: ToDoItemDescription.From("Review the different projects in the solution and how they relate to one another."));
+
+
+  public static readonly ToDoItem ToDoItem3 =
+new ToDoItem(title: ToDoItemTitle.From("Run and Review Tests"),
+  description: ToDoItemDescription.From("Make sure all the tests run and review what they are doing."));
+
+  public static async Task InitializeAsync(AppDbContext dbContext)
   {
-    using (var dbContext = new AppDbContext(
-        serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), null))
+    if (await dbContext.ToDoItems.AnyAsync())
     {
-      // Look for any TODO items.
-      if (dbContext.ToDoItems.Any())
-      {
-        return;   // DB has been seeded
-      }
-
-      PopulateTestData(dbContext);
-
-
+      return;   // DB has been seeded
     }
+
+    await PopulateTestDataAsync(dbContext);
   }
-  public static void PopulateTestData(AppDbContext dbContext)
+
+  public static async Task PopulateTestDataAsync(AppDbContext dbContext)
   {
     foreach (var item in dbContext.Projects)
     {
@@ -55,12 +47,12 @@ public static class SeedData
     {
       dbContext.Remove(item);
     }
-    dbContext.SaveChanges();
+    await dbContext.SaveChangesAsync();
 
     dbContext.Contributors.Add(Contributor1);
     dbContext.Contributors.Add(Contributor2);
 
-    dbContext.SaveChanges();
+    await dbContext.SaveChangesAsync();
 
     ToDoItem1.AddContributor(Contributor1.Id);
     ToDoItem2.AddContributor(Contributor2.Id);
@@ -71,6 +63,13 @@ public static class SeedData
     TestProject1.AddItem(ToDoItem3);
     dbContext.Projects.Add(TestProject1);
 
-    dbContext.SaveChanges();
+    await dbContext.SaveChangesAsync();
+
+    // add a bunch more contributors to support demonstrating paging
+    for (int i = 1; i <= 25; i++)
+    {
+      dbContext.Contributors.Add(new Contributor(ContributorName.From($"Contributor {i}")));
+    }
+    await dbContext.SaveChangesAsync();
   }
 }

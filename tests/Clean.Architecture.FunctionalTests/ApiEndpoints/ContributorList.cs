@@ -13,8 +13,8 @@ public class ContributorList(CustomWebApplicationFactory<Program> factory) : ICl
   {
     var result = await _client.GetAndDeserializeAsync<ContributorListResponse>("/Contributors");
 
-    Assert.Equal(2, result.Contributors.Count);
-    Assert.Contains(result.Contributors, i => i.Name == SeedData.Contributor1.Name);
-    Assert.Contains(result.Contributors, i => i.Name == SeedData.Contributor2.Name);
+    Assert.Equal(SeedData.NUMBER_OF_CONTRIBUTORS, result.TotalCount);
+    Assert.Contains(result.Items, i => i.Name == SeedData.Contributor1.Name);
+    Assert.Contains(result.Items, i => i.Name == SeedData.Contributor2.Name);
   }
 }

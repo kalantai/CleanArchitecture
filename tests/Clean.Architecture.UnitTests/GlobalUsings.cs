@@ -2,8 +2,8 @@
 global using Ardalis.SharedKernel;
 global using Clean.Architecture.Core.ContributorAggregate;
 global using Clean.Architecture.UseCases.Contributors.Create;
-global using FluentAssertions;
-global using MediatR;
+global using Shouldly;
+global using Mediator;
 global using Microsoft.Extensions.Logging;
 global using NSubstitute;
 global using Xunit;

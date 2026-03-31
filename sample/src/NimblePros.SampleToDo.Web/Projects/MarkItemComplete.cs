@@ -1,18 +1,14 @@
-﻿using NimblePros.SampleToDo.UseCases.Projects.MarkToDoItemComplete;
+﻿using NimblePros.SampleToDo.Core.ProjectAggregate;
+using NimblePros.SampleToDo.UseCases.Projects.MarkToDoItemComplete;
 
 namespace NimblePros.SampleToDo.Web.ProjectEndpoints;
 
 /// <summary>
 /// Mark an item as complete
 /// </summary>
-public class MarkItemComplete : Endpoint<MarkItemCompleteRequest>
+public class MarkItemComplete(IMediator mediator) : Endpoint<MarkItemCompleteRequest>
 {
-  private readonly IMediator _mediator;
-
-  public MarkItemComplete(IMediator mediator)
-  {
-    _mediator = mediator;
-  }
+  private readonly IMediator _mediator = mediator;
 
   public override void Configure()
   {
@@ -32,18 +28,18 @@ public class MarkItemComplete : Endpoint<MarkItemCompleteRequest>
     MarkItemCompleteRequest request,
     CancellationToken cancellationToken)
   {
-    var command = new MarkToDoItemCompleteCommand(request.ProjectId, request.ToDoItemId);
+    var command = new MarkToDoItemCompleteCommand(ProjectId.From(request.ProjectId), request.ToDoItemId);
     var result = await _mediator.Send(command);
 
     if (result.Status == Ardalis.Result.ResultStatus.NotFound)
     {
-      await SendNotFoundAsync(cancellationToken);
+      await Send.NotFoundAsync(cancellationToken);
       return;
     }
 
     if (result.IsSuccess)
     {
-      await SendNoContentAsync(cancellationToken);
+      await Send.NoContentAsync(cancellationToken);
     };
     // TODO: Handle other issues as needed
   }
